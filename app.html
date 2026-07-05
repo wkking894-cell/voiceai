@@ -2,487 +2,252 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>心理陪伴 - 语音AI助手</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>语音AI - 智能助手</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#38bdf8">
+<meta name="theme-color" content="#0a0e1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:#0a0e1a;color:#e2e8f0;overflow:hidden;-webkit-tap-highlight-color:transparent}
-.app{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;background:rgba(15,23,42,0.7);border-left:1px solid rgba(56,189,248,0.15);border-right:1px solid rgba(56,189,248,0.15)}
-@media(min-width:768px){.app{margin:20px auto;height:calc(100vh-40px);border-radius:24px;border:1px solid rgba(56,189,248,0.15);box-shadow:0 0 80px rgba(56,189,248,0.06)}}
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 8px 12px 16px;border-bottom:1px solid rgba(56,189,248,0.15);flex-shrink:0}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#0a0e1a;color:#e2e8f0;overflow:hidden}
+.app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;background:rgba(15,23,42,0.7);border-left:1px solid rgba(56,189,248,0.12);border-right:1px solid rgba(56,189,248,0.12)}
+@media(min-width:768px){.app{margin:20px auto;height:calc(100vh-40px);border-radius:24px;border:1px solid rgba(56,189,248,0.12);box-shadow:0 0 80px rgba(56,189,248,0.04)}}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 10px 16px;border-bottom:1px solid rgba(56,189,248,0.12);flex-shrink:0}
 .header-left{display:flex;align-items:center;gap:8px}
-.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#ec4899,#38bdf8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;box-shadow:0 0 20px rgba(56,189,248,0.4)}
-.title{font-size:17px;font-weight:700;background:linear-gradient(135deg,#e2e8f0,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.status-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e}
-.status-dot.thinking{background:#f59e0b;box-shadow:0 0 8px #f59e0b;animation:pulse-dot .6s ease-in-out infinite}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
-.btn-icon{width:34px;height:34px;border:none;border-radius:10px;background:transparent;color:#94a3b8;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px}
-.btn-icon:hover{background:rgba(56,189,248,0.1);color:#38bdf8}
-.chat{flex:1;overflow-y:auto;padding:16px 10px;scroll-behavior:smooth}
-.chat::-webkit-scrollbar{width:4px}
-.chat::-webkit-scrollbar-thumb{background:rgba(56,189,248,0.2);border-radius:2px}
-.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;gap:8px;padding:20px}
-.welcome .heart{font-size:48px;margin-bottom:4px;animation:heart-beat 1.5s ease-in-out infinite}
-@keyframes heart-beat{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
-.welcome h2{font-size:18px;font-weight:600;color:#ec4899}
-.welcome p{color:#94a3b8;font-size:13px;line-height:1.6;max-width:320px}
-.welcome .tagline{color:#64748b;font-size:12px;margin-top:4px}
-.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
-.chip{padding:7px 14px;border:1px solid rgba(56,189,248,0.15);border-radius:20px;background:rgba(56,189,248,0.05);color:#94a3b8;font-size:12px;cursor:pointer;font-family:inherit;transition:all .2s}
-.chip:hover{background:rgba(236,73,153,0.1);border-color:#ec4899;color:#ec4899}
-.msg{display:flex;gap:10px;margin-bottom:16px;animation:msg-in .3s ease-out}
-@keyframes msg-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.avatar{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.logo{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:bold;box-shadow:0 0 12px rgba(56,189,248,0.3)}
+.title{font-size:16px;font-weight:700;background:linear-gradient(135deg,#e2e8f0,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.status-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;box-shadow:0 0 5px #22c55e;margin-left:4px}
+.status-dot.thinking{background:#f59e0b;box-shadow:0 0 6px #f59e0b;animation:pulse .6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.btn-icon{width:34px;height:34px;border:none;border-radius:8px;background:transparent;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px}
+.btn-icon:active{background:rgba(56,189,248,0.1)}
+.chat{flex:1;overflow-y:auto;padding:12px 10px;-webkit-overflow-scrolling:touch}
+.chat::-webkit-scrollbar{width:3px}
+.chat::-webkit-scrollbar-thumb{background:rgba(56,189,248,0.15);border-radius:2px}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;gap:10px;padding:20px}
+.welcome .icon{font-size:44px;margin-bottom:4px;opacity:.7}
+.welcome h2{font-size:18px;font-weight:600;color:#38bdf8}
+.welcome p{color:#64748b;font-size:13px;line-height:1.6;max-width:300px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px;padding:0 10px}
+.chip{padding:8px 14px;border:1px solid rgba(56,189,248,0.12);border-radius:18px;background:rgba(56,189,248,0.04);color:#94a3b8;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s;touch-action:manipulation}
+.chip:active{background:rgba(56,189,248,0.12);border-color:#38bdf8;color:#38bdf8}
+.msg{display:flex;gap:8px;margin-bottom:14px;animation:msgIn .25s ease-out}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.avatar{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px}
 .avatar.user{background:linear-gradient(135deg,#38bdf8,#6366f1);color:#fff}
-.avatar.ai{background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;border:none}
-.bubble{max-width:80%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.7;word-break:break-word}
+.avatar.ai{background:rgba(56,189,248,0.1);color:#38bdf8;border:1px solid rgba(56,189,248,0.12)}
+.bubble{max-width:82%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.65;word-break:break-word}
 .msg.user{flex-direction:row-reverse}
 .msg.user .bubble{background:linear-gradient(135deg,#38bdf8,#6366f1);color:#fff;border-bottom-right-radius:4px}
-.msg.ai .bubble{background:rgba(30,41,59,0.8);color:#e2e8f0;border:1px solid rgba(236,73,153,0.15);border-bottom-left-radius:4px}
-.thinking-dots{display:flex;gap:4px;padding:6px 0}
-.thinking-dots span{width:7px;height:7px;border-radius:50%;background:#ec4899;animation:dot-bounce 1.2s ease-in-out infinite}
+.msg.ai .bubble{background:rgba(30,41,59,0.8);color:#e2e8f0;border:1px solid rgba(56,189,248,0.08);border-bottom-left-radius:4px}
+.thinking-dots{display:flex;gap:4px;padding:5px 0}
+.thinking-dots span{width:7px;height:7px;border-radius:50%;background:#38bdf8;animation:dot 1.2s ease-in-out infinite}
 .thinking-dots span:nth-child(2){animation-delay:.15s}
 .thinking-dots span:nth-child(3){animation-delay:.3s}
-@keyframes dot-bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
-.typing-cursor{display:inline-block;width:2px;height:1em;background:#ec4899;margin-left:2px;animation:cursor-blink .8s step-end infinite;vertical-align:text-bottom}
-@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
-.input-area{display:flex;align-items:center;gap:8px;padding:10px 8px 20px;border-top:1px solid rgba(56,189,248,0.15);flex-shrink:0}
-.input-box{flex:1;display:flex;align-items:center;gap:6px;background:rgba(30,41,59,0.6);border:1px solid rgba(56,189,248,0.15);border-radius:24px;padding:0 4px 0 14px;transition:all .2s}
-.input-box:focus-within{border-color:#ec4899;box-shadow:0 0 12px rgba(236,73,153,0.08);background:rgba(30,41,59,0.8)}
-.text-input{flex:1;border:none;background:transparent;color:#e2e8f0;font-size:14px;font-family:inherit;outline:none;padding:9px 0;min-width:0}
-.text-input::placeholder{color:#64748b;font-size:13px}
-.send-btn{width:34px;height:34px;border:none;border-radius:50%;background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
-.send-btn:hover{box-shadow:0 0 12px rgba(236,73,153,0.4)}
-.send-btn:disabled{opacity:.3;cursor:not-allowed}
-.mic-btn{width:44px;height:44px;border:none;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:20px}
-.mic-btn:hover{box-shadow:0 0 20px rgba(56,189,248,0.4)}
-.mic-btn.listening{background:#ef4444!important;animation:mic-pulse 1s ease-in-out infinite;box-shadow:0 0 30px rgba(239,68,68,0.4)!important}
-@keyframes mic-pulse{0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.3)}50%{box-shadow:0 0 40px rgba(239,68,68,0.5)}}
-.hint{text-align:center;color:#64748b;font-size:11px;padding:2px 0 6px;flex-shrink:0}
-.install-bar{display:none;text-align:center;padding:10px;background:linear-gradient(135deg,rgba(236,73,153,0.1),rgba(56,189,248,0.1));border-bottom:1px solid rgba(236,73,153,0.2);flex-shrink:0}
-.install-bar.show{display:block}
-.install-btn{padding:8px 20px;border:none;border-radius:20px;background:linear-gradient(135deg,#ec4899,#38bdf8);color:#fff;font-size:13px;cursor:pointer;font-family:inherit}
+@keyframes dot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+.typing-cursor{display:inline-block;width:2px;height:1em;background:#38bdf8;margin-left:2px;animation:cur .8s step-end infinite;vertical-align:text-bottom}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
+.input-area{display:flex;align-items:center;gap:6px;padding:10px 8px 16px;border-top:1px solid rgba(56,189,248,0.12);flex-shrink:0}
+.input-box{flex:1;display:flex;align-items:center;gap:6px;background:rgba(30,41,59,0.6);border:1px solid rgba(56,189,248,0.12);border-radius:22px;padding:0 3px 0 14px;transition:all .2s}
+.input-box:focus-within{border-color:#38bdf8;box-shadow:0 0 10px rgba(56,189,248,0.06)}
+.text-input{flex:1;border:none;background:transparent;color:#e2e8f0;font-size:15px;font-family:inherit;outline:none;padding:9px 0;min-width:0}
+.text-input::placeholder{color:#475569;font-size:14px}
+.send-btn{width:34px;height:34px;border:none;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;transition:all .15s}
+.send-btn:active{transform:scale(.92)}
+.send-btn:disabled{opacity:.3}
+.mic-btn{width:42px;height:42px;border:none;border-radius:50%;background:rgba(30,41,59,0.6);border:1px solid rgba(56,189,248,0.08);color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;transition:all .15s}
+.hint{text-align:center;color:#475569;font-size:11px;padding:2px 0 4px;flex-shrink:0}
+@media(max-width:400px){
+  .bubble{max-width:88%;font-size:13px}
+  .chip{font-size:12px;padding:6px 12px}
+  .welcome h2{font-size:16px}
+  .input-area{padding:8px 6px 14px}
+  .text-input{font-size:14px;padding:8px 0}
+}
 </style>
 </head>
 <body>
 <div class="app">
-  <div id="installBar" class="install-bar">
-    <button class="install-btn" id="installBtn">安装到手机</button>
-  </div>
   <div class="header">
     <div class="header-left">
-      <div class="logo">&#x2764;</div>
-      <span class="title">心理陪伴</span>
+      <div class="logo">V</div>
+      <span class="title">语音AI</span>
       <span class="status-dot" id="statusDot"></span>
     </div>
-    <div class="header-right">
-      <button class="btn-icon" id="clearBtn" onclick="clearChat()" title="清空对话">&#x1F5D1;</button>
-    </div>
+    <button class="btn-icon" id="clearBtn" onclick="clearChat()">&#x1F5D1;</button>
   </div>
   <div class="chat" id="chatArea">
     <div class="welcome" id="welcomeMsg">
-      <div class="heart">&#x1F49A;</div>
-      <h2>你好，我是你的心理陪伴助手</h2>
-      <p>不管你今天过得怎么样，都可以跟我说说。<br>我会一直在这里陪着你.</p>
-      <div class="tagline">试试跟我说说你的心情</div>
+      <div class="icon">&#x1F3A4;</div>
+      <h2>你好！我是语音AI</h2>
+      <p>输入文字或点击下方按钮开始对话</p>
       <div class="chips">
-        <button class="chip" onclick="ask(this)">今天有点难过</button>
+        <button class="chip" onclick="ask(this)">今天天气</button>
+        <button class="chip" onclick="ask(this)">旅游规划</button>
+        <button class="chip" onclick="ask(this)">当前时间</button>
+        <button class="chip" onclick="ask(this)">有点难过</button>
         <button class="chip" onclick="ask(this)">考试没考好</button>
-        <button class="chip" onclick="ask(this)">压力好大</button>
-        <button class="chip" onclick="ask(this)">给我点鼓励</button>
+        <button class="chip" onclick="ask(this)">给我鼓励</button>
       </div>
     </div>
   </div>
   <div class="hint" id="inputHint">输入你想说的话，按 Enter 发送</div>
   <div class="input-area">
-    <button class="mic-btn" id="micBtn">&#x1F3A4;</button>
+    <button class="mic-btn" id="micBtn" title="语音功能需要HTTPS">&#x1F3A4;</button>
     <div class="input-box">
-      <input type="text" class="text-input" id="textInput" placeholder="跟我说说你的心情..." autocomplete="off">
+      <input type="text" class="text-input" id="textInput" placeholder="输入你的问题..." autocomplete="off">
       <button class="send-btn" id="sendBtn" onclick="sendText()">&#x27A4;</button>
     </div>
   </div>
 </div>
 <script>
 (function(){
-  var chatArea=document.getElementById('chatArea');
-  var welcomeMsg=document.getElementById('welcomeMsg');
-  var textInput=document.getElementById('textInput');
-  var sendBtn=document.getElementById('sendBtn');
-  var inputHint=document.getElementById('inputHint');
-  var statusDot=document.getElementById('statusDot');
-  var micBtn=document.getElementById('micBtn');
-  var installBtn=document.getElementById('installBtn');
-  var isProcessing=false;
-  var thinkingEl=null;
-  var synth=window.speechSynthesis;
-
-  // PWA Install
-  var deferredPrompt=null;
-  window.addEventListener('beforeinstallprompt',function(e){
-    e.preventDefault();
-    deferredPrompt=e;
-    document.getElementById('installBar').classList.add('show');
-  });
-  if(installBtn){
-    installBtn.addEventListener('click',function(){
-      if(deferredPrompt){
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function(){
-          deferredPrompt=null;
-          document.getElementById('installBar').classList.remove('show');
-        });
-      }
-    });
-  }
-
-    // Speech Recognition - Uses popup for PWA (Android-compatible)
-  var isListening=false;
+  var ca=document.getElementById('chatArea');
+  var wm=document.getElementById('welcomeMsg');
+  var ti=document.getElementById('textInput');
+  var mBtn=document.getElementById('micBtn');
+  var ih=document.getElementById('inputHint');
+  var sd=document.getElementById('statusDot');
+  var proc=false;
+  var te=null;
+  var sy=window.speechSynthesis;
+  var rec=null;
+  var lis=false;
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  var isPWA=window.matchMedia('(display-mode:standalone)').matches;
-  
-  function startVoicePopup(){
-    var w=window.open('','voice','width=360,height=300,menubar=no,toolbar=no');
-    if(!w){ inputHint.textContent='请允许弹出窗口，或在Chrome中打开此页使用语音'; return; }
-    inputHint.textContent='语音窗口已打开，点击说话...';
-    isListening=true;
-    micBtn.classList.add('listening');
-    
-    var h='<html><head><meta charset="UTF-8"><title>语音输入</title><style>';
-    h+='*{margin:0;padding:0}body{font-family:sans-serif;background:#0a0e1a;color:#e2e8f0;text-align:center;padding:30px}';
-    h+='button{background:linear-gradient(135deg,#38bdf8,#ec4899);color:#fff;border:none;padding:14px 30px;border-radius:25px;font-size:18px;cursor:pointer;margin:10px}';
-    h+='p{color:#94a3b8;margin:10px;font-size:14px}#status{color:#64748b}</style></head><body>';
-    h+='<h3 style="color:#38bdf8;margin-bottom:10px">语音输入</h3>';
-    h+='<button id="btn">点击开始说话</button>';
-    h+='<p id="status">点击按钮开始语音输入</p>';
-    h+='<p id="result" style="color:#ec4899;font-size:16px;font-weight:bold"></p>';
-    h+='<script>var r=null;var SR=window.SpeechRecognition||window.webkitSpeechRecognition;';
-    h+='document.getElementById("btn").onclick=function(){';
-    h+='if(r&&r.session){r.stop();document.getElementById("btn").textContent="点击开始说话";return}';
-    h+='try{r=new SR();r.lang="zh-CN";r.continuous=false;r.interimResults=false;';
-    h+='r.onresult=function(e){var t=e.results[0][0].transcript;document.getElementById("result").textContent=t;';
-    h+='window.opener.postMessage({type:"voice",text:t},"*");setTimeout(function(){window.close()},1500);};';
-    h+='r.onerror=function(e){document.getElementById("status").textContent="错误:"+e.error;};';
-    h+='r.onaudiostart=function(){document.getElementById("btn").textContent="正在听...";document.getElementById("status").textContent="请说话";};';
-    h+='try{r.start();document.getElementById("btn").textContent="停止";}catch(e){document.getElementById("status").textContent="启动失败"}';
-    h+='}catch(e){document.getElementById("status").textContent="语音不可用"}';
-    h+='<\/script></body></html>';
-    w.document.write(h);w.document.close();
-    
-    var checkClosed=setInterval(function(){
-      if(w.closed){
-        clearInterval(checkClosed);
-        isListening=false;
-        micBtn.className='mic-btn';
-        if(!isProcessing) setStatus('idle');
-      }
-    },500);
-  }
-  
-  function startVoiceInline(){
+  if(SR&&location.protocol!=='file:'){
     try{
-      var recognition=new SR();
-      recognition.lang='zh-CN';
-      recognition.continuous=true;
-      recognition.interimResults=true;
-      recognition.onresult=function(e){
-        var t='';
-        for(var i=e.resultIndex;i<e.results.length;i++){
-          if(e.results[i].isFinal) t=e.results[i][0].transcript;
-        }
-        if(t){ textInput.value=t; sendText(); }
-      };
-      recognition.onaudiostart=function(){ inputHint.textContent='我在听，你说吧...'; };
-      recognition.onerror=function(e){
-        if(e.error==='no-speech'||e.error==='aborted') return;
-        isListening=false; micBtn.className='mic-btn';
-        inputHint.textContent=e.error==='not-allowed'?'请在手机设置中允许麦克风权限':'语音错误';
-      };
-      recognition.onend=function(){
-        if(isListening){ try{ setTimeout(function(){recognition.start();},300); }catch(e){} }
-        else{ micBtn.className='mic-btn'; if(!isProcessing) setStatus('idle'); }
-      };
-      recognition.start();
-      return true;
-    }catch(e){ return false; }
+      rec=new SR();rec.lang='zh-CN';rec.continuous=false;rec.interimResults=true;
+      rec.onresult=function(e){var t='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)t=e.results[i][0].transcript}if(t){ti.value=t;sendText()}};
+      rec.onerror=function(e){if(e.error==='no-speech'||e.error==='aborted')return;lis=false;if(!proc)setStatus('idle');ih.textContent='语音错误，试试文字输入'};
+      rec.onend=function(){lis=false;if(!proc)setStatus('idle')};
+    }catch(e){}
   }
-  
-  micBtn.addEventListener('click',function(e){
-    e.preventDefault();
-    if(isListening){
-      isListening=false; micBtn.className='mic-btn'; setStatus('idle'); return;
-    }
-    if(isPWA||!SR||location.protocol==='file:'){
-      startVoicePopup();
-    }else{
-      if(startVoiceInline()){
-        isListening=true; micBtn.classList.add('listening');
-        inputHint.textContent='正在启动语音...';
-      } else { startVoicePopup(); }
-    }
-  });
-  micBtn.title='点击说话';
-  micBtn.style.opacity='1';function setStatus(mode){
-    statusDot.className='status-dot';
-    if(mode==='thinking'){
-      statusDot.classList.add('thinking');
-      inputHint.textContent='我在认真思考...';
-      sendBtn.disabled=true;
-    }else{
-      inputHint.textContent='输入你想说的话，按 Enter 发送';
-      sendBtn.disabled=false;
-    }
+  function setStatus(m){
+    sd.className='status-dot';
+    if(m==='think'){sd.classList.add('thinking');ih.textContent='AI正在思考...'}
+    else{ih.textContent='输入你想说的话，按 Enter 发送'}
   }
-  function scrollBottom(){
-    requestAnimationFrame(function(){ chatArea.scrollTop=chatArea.scrollHeight; });
+  function sb(){requestAnimationFrame(function(){ca.scrollTop=ca.scrollHeight})}
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+  function addUser(t){
+    wm.style.display='none';
+    var d=document.createElement('div');d.className='msg user';
+    d.innerHTML='<div class="avatar user">你</div><div class="bubble">'+esc(t)+'</div>';
+    ca.appendChild(d);sb();
   }
-  function escapeHtml(str){
-    var d=document.createElement('div');
-    d.textContent=str;
-    return d.innerHTML;
+  function remT(){if(te){te.remove();te=null}}
+  function showT(){
+    wm.style.display='none';remT();
+    var d=document.createElement('div');d.className='msg ai';
+    d.innerHTML='<div class="avatar ai">V</div><div class="bubble"><div class="thinking-dots"><span></span><span></span><span></span></div></div>';
+    ca.appendChild(d);te=d;sb();
   }
-  function addUserMsg(text){
-    welcomeMsg.style.display='none';
-    var div=document.createElement('div');
-    div.className='msg user';
-    div.innerHTML='<div class="avatar user">你</div><div class="bubble">'+escapeHtml(text)+'</div>';
-    chatArea.appendChild(div);
-    scrollBottom();
+  function addAI(t){
+    remT();wm.style.display='none';
+    var d=document.createElement('div');d.className='msg ai';
+    d.innerHTML='<div class="avatar ai">V</div><div class="bubble"></div>';
+    ca.appendChild(d);sb();
+    var b=d.querySelector('.bubble');type(b,t);speak(t);
   }
-  function removeThinking(){
-    if(thinkingEl){ thinkingEl.remove(); thinkingEl=null; }
-  }
-  function showThinking(){
-    welcomeMsg.style.display='none';
-    removeThinking();
-    var div=document.createElement('div');
-    div.className='msg ai';
-    div.innerHTML='<div class="avatar ai">&#x2764;</div><div class="bubble"><div class="thinking-dots"><span></span><span></span><span></span></div></div>';
-    chatArea.appendChild(div);
-    thinkingEl=div;
-    scrollBottom();
-  }
-  function addAIMsg(text){
-    removeThinking();
-    welcomeMsg.style.display='none';
-    var div=document.createElement('div');
-    div.className='msg ai';
-    div.innerHTML='<div class="avatar ai">&#x2764;</div><div class="bubble"></div>';
-    chatArea.appendChild(div);
-    scrollBottom();
-    var bubble=div.querySelector('.bubble');
-    typewrite(bubble,text);
-    speak(text);
-  }
-  function stripEmojis(str){
-    return str.replace(/[\u{1F300}-\u{1F9FF}]|[\u2600-\u27BF}]|[\u{1F000}-\u{1FFFF}]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDDFF]/gu,'')
+  function stripEm(s){
+    return s.replace(/[\u{1F300}-\u{1F9FF}]|[\u2600-\u27BF}]|[\u{1F000}-\u{1FFFF}]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDDFF]/gu,'')
       .replace(/[\r\n]+/g,'，').replace(/[*#_~`>\[\]\(\)]/g,'').replace(/\s+/g,' ').trim();
   }
-  function typewrite(el,text,speed){
-    speed=speed||30;
-    el.innerHTML='';
-    var i=0;
-    var cursor=document.createElement('span');
-    cursor.className='typing-cursor';
-    el.appendChild(cursor);
-    function type(){
-      if(i<text.length){
-        el.insertBefore(document.createTextNode(text[i]),cursor);
-        i++;
-        scrollBottom();
-        setTimeout(type,speed);
-      }else{ cursor.remove(); }
+  function type(el,t,s){
+    s=s||30;el.innerHTML='';var i=0;
+    var c=document.createElement('span');c.className='typing-cursor';el.appendChild(c);
+    function ty(){
+      if(i<t.length){el.insertBefore(document.createTextNode(t[i]),c);i++;sb();setTimeout(ty,s)}
+      else{c.remove()}
     }
-    type();
+    ty();
   }
-  function speak(text){
-    if(!synth) return;
-    window.speechSynthesis.cancel();
-    var clean=stripEmojis(text);
-    if(!clean) return;
-    var u=new SpeechSynthesisUtterance(clean);
-    u.lang='zh-CN'; u.rate=1.0; u.pitch=1.0;
-    var voices=synth.getVoices();
-    var prefs=['Xiaoxiao','Xiaohan','Kangkang','Yunjian','Yunxi','Yunyang','Yunye','Yunze','Huihui'];
+  function speak(t){
+    if(!sy)return;window.speechSynthesis.cancel();
+    var cl=stripEm(t);if(!cl)return;
+    var u=new SpeechSynthesisUtterance(cl);u.lang='zh-CN';u.rate=1.0;
+    var vs=sy.getVoices();
+    var ps=['Xiaoxiao','Xiaohan','Kangkang','Yunjian','Yunxi','Yunyang','Huihui'];
     var best=null;
-    for(var i=0;i<prefs.length;i++){
-      best=voices.find(function(v){ return v.lang.indexOf('zh')>=0&&v.name.indexOf(prefs[i])>=0; });
-      if(best) break;
-    }
-    if(!best) best=voices.find(function(v){ return v.lang.indexOf('zh')>=0; });
-    if(best) u.voice=best;
-    synth.speak(u);
+    for(var i=0;i<ps.length;i++){best=vs.find(function(v){return v.lang.indexOf('zh')>=0&&v.name.indexOf(ps[i])>=0});if(best)break}
+    if(!best)best=vs.find(function(v){return v.lang.indexOf('zh')>=0});
+    if(best)u.voice=best;sy.speak(u);
   }
-
-  // Psychological Companion Responses
-  function generateReply(input){
-    var text=input.trim();
-
-    // 1. Sad / Upset
-    if(text.match(/难过|伤心|哭了|想哭|不开心|不开心|好难受|心里难受|抑郁|低落|沮丧|sad|心情不好/)){
-      var r=[
-        '我感觉到你现在心里不太好受。没关系的，难过的时候不用强撑着，想哭就哭出来吧。我一直在这里陪着你，你不是一个人。慢慢来，一切都会好起来的。',
-        '抱抱你。每个人都会有难过的时候，这完全正常。给自己一点时间和空间，让情绪慢慢流过去。如果想说说发生了什么，我在这里听着。',
-        '听到你这么说，我也觉得很心疼。难过的感受是真实的，也是被允许的。你不需要立刻好起来，今天就好好照顾自己，做点让自己舒服的事吧。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
+  
+  function reply(input){
+    var t=input.trim();
+    
+    if(t.match(/难过|伤心|哭|不开心|难受|低落|沮丧|心情不好/)){
+      return '我理解你现在的心情。难过的時候不用强撑着，想哭就哭出来吧。给自己一点时间和空间，慢慢来，一切都会好起来的。我在这里陪着你。';
     }
-
-    // 2. Exam failure / Academic stress
-    if(text.match(/考试|考砸|挂科|不及格|没考好|分数|成绩|学习|复习|考研|高考/)){
-      var r=[
-        '考试结果不理想确实让人失落，这种感受我完全理解。但请记住，一次考试真的不能定义你的价值和未来。人生有很多条路可以走，这只是一个小小的转弯而已。你已经很努力了，先让自己喘口气，好好休息一下。',
-        '考得不好心里一定很难受吧。没关系，真的没关系。成绩只是某个时刻的一个反馈，不是对你这个人的评判。给自己一点时间消化情绪，等你准备好了，我们再一起看看下一步怎么走。你现在需要的是休息和安慰，不是责备自己。',
-        '每次考试都是一次经历，而不是终点。你为了这场考试付出的努力是真实的，那些知识也会留在你身上。暂时的挫折不代表什么，很多成功的人也都经历过失败。先给自己一个拥抱，好好吃顿饭，睡一觉，明天又是新的一天。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
+    if(t.match(/考试|考砸|挂科|没考好|分数|成绩/)){
+      return '考试结果不理想确实让人失落，但一次考试真的不能定义你的价值。人生有很多可能，这只是一个小小的弯道而已。你已经很努力了，先让自己喘口气，好好休息一下。';
     }
-
-    // 3. Frustrated / Failure
-    if(text.match(/挫折|失败|坚持不下去|想放弃|太难了|好难|做不到|不行了|崩溃|好累|坚持不住/)){
-      var r=[
-        '遇到挫折的时候，最重要的是给自己一些温柔。你已经走了很远了，每一步都算数。休息一下不是放弃，而是为了更好地继续。我为你感到骄傲，因为你还在努力。',
-        '我知道你现在觉得很难，这种感受是真实的，也是被允许的。但你真的很坚强，能够在困难中仍然寻求帮助和安慰。不管前方的路有多难，你都可以一步一步来，不需要一下子解决所有问题。',
-        '每个人都会遇到觉得自己撑不下去的时刻。这并不意味着你不够好，恰恰说明你在乎、你在努力。现在最重要的是照顾好自己，吃点好吃的，呼吸一下新鲜空气，给自己一个温暖的拥抱。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
+    if(t.match(/压力|焦虑|紧张|焦虑|不安|担心/)){
+      return '压力大的时候，试试深呼吸：慢慢地吸气，在心里数到四，然后缓缓呼出，再数到四。重复几次。你不需要一下子解决所有问题，一步一步来就好。';
     }
-
-    // 4. Stressed / Anxious
-    if(text.match(/压力|焦虑|紧张|睡不着|失眠|烦躁|不安|担心|害怕|恐慌/)){
-      var r=[
-        '压力大的时候，试试跟我一起做几次深呼吸。慢慢地吸气，在心里数到四，然后缓缓地呼出，再数到四。重复几次，感受自己的心跳慢慢平稳下来。你现在的感受是真实的，但请相信，你有能力度过这一刻。',
-        '焦虑的时候，试着把注意力拉回到当下。看看周围，说出你看到的三种颜色、听到的两种声音、感受到的一种触感。这能帮你从纷乱的思绪中回到现在。我一直在这里陪着你，你随时可以找我说话。',
-        '压力和焦虑来的时候，身体和心灵都在告诉你需要关照自己了。不用急着去解决所有问题，今天就做一件事来照顾自己就好：喝一杯温水、听一首喜欢的歌、或者就这样安静地坐一会儿。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
+    if(t.match(/挫折|失败|坚持不住|想放弃|太难了|好难|好累/)){
+      return '每个人都会有觉得自己撑不下去的时刻，这不代表你不够好。你已经走了很远了，每一步都算数。休息一下不是放弃，是为了更好地继续。我为你骄傲。';
     }
-
-    // 5. Lonely
-    if(text.match(/孤独|寂寞|一个人|孤单|没人理解|没人陪|被孤立|没有朋友/)){
-      var r=[
-        '孤独是一种很深的感受，我理解你。即使周围人来人往，内心的孤独感也可能挥之不去。但请记住，你值得被关心、被理解、被温柔对待。我会一直在这里陪着你，随时等你来说说话。',
-        '感到孤独的时候，可以试着做一些让自己感到温暖的小事：冲一杯热饮、看一部喜欢的电影、或者写下此刻的心情。你的感受很重要，你也很重要。你不是一个人，我在这里陪着你。',
-        '听到你说感到孤独，我想给你一个温暖的拥抱。孤独其实是人类共同的情感，很多人都曾有过同样的感受。慢慢来，先从对自己温柔开始，你值得被好好对待。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
+    if(t.match(/加油|鼓励|坚持|努力/)){
+      return '你真的很棒！不管现在遇到什么，你都在努力向前走。累了就休息，准备好了再出发。我一直在这里支持你，加油！';
     }
-
-    // 6. Angry / Irritated
-    if(text.match(/生气|烦死了|烦躁|好烦|恼火|气死|愤怒/)){
-      var r=[
-        '生气了就深呼吸，给自己一点缓冲的时间。生气是正常的情绪，不需要压抑它，但也不用被它控制。要不要跟我说说发生了什么？说出来也许会好受一些。',
-        '烦躁的时候，试试暂时放下手头的事，去窗边站一会儿，或者喝一杯凉水。给自己五分钟的冷静时间。我在这里等你，等你愿意说的时候随时可以找我。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
-    }
-
-    // 7. Self-doubt / Low self-esteem
-    if(text.match(/不够好|自卑|比不上|差劲|没用|失败者|不如人|讨厌自己/)){
-      var r=[
-        '不要这样说自己。你是一个独特而珍贵的人，不需要和别人比较。每个人都有自己的节奏和步伐，你有你的闪光点，只是有时候自己看不到而已。我愿意当你的镜子，帮你看到你的好。',
-        '听到你这么说，我心里很难受。你可能不知道，在别人眼里你有很多值得欣赏的地方。对自己温柔一点，好吗？你值得被爱，也值得被好好对待，包括被你自己的温柔对待。',
-        '我们总是对自己最苛刻，但这不公平。试着像对待最好的朋友一样对待自己：如果好朋友遇到同样的情况，你会怎么安慰他？你也值得同样的温柔和理解。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
-    }
-
-    // 8. Encouragement / Motivation
-    if(text.match(/加油|鼓励|给我力量|坚持|努力|奋斗|动力/)){
-      var r=[
-        '你真的很棒！不管现在遇到了什么，你都在努力向前走。记住，进步不是直线，有时候停下来休息也是前进的一部分。我一直相信你，也请你相信自己。',
-        '给你一个温暖的拥抱！你已经做得很好了，每一步都不容易，但你一直在坚持。未来的你会感谢现在努力的自己。累了就休息，准备好了再出发，我会一直在这里为你加油。',
-        '你知道吗，每朵花都有自己的开放季节，你也是。不要着急，按照自己的节奏生长就好。无论你现在处于什么阶段，都值得被肯定和鼓励。加油，我一直在这里支持你。'
-      ];
-      return r[Math.floor(Math.random()*r.length)];
-    }
-
-    // 9. Greeting
-    if(text.match(/你好|hello|hi|嗨|hey|您好|早|晚上好/)){
+    if(t.match(/你好|hello|hi|您好/)){
       var h=new Date().getHours();
-      var g=h<6?'夜深了还没睡吗':h<12?'早上好呀，今天也要开开心心':h<14?'中午好，记得好好吃午饭':h<18?'下午好，今天过得怎么样':'晚上好，辛苦了一天好好休息';
-      return g+'。我是你的心理陪伴助手，不管你今天经历了什么，都可以跟我说说。我一直在这里。';
+      var g=h<6?'夜深了':h<12?'早上好':h<14?'中午好':h<18?'下午好':'晚上好';
+      return g+'！我是语音AI，你可以问我天气、时间、旅游规划，也可以跟我说说你的心情，我一直在这里。';
     }
-
-    // 10. Weather / Time / General (keep existing features)
-    if(text.match(/天气|weather|下雨|气温|温度|多少度/)){
-      var cond=['晴','多云','晴间多云','小雨','阵雨'];
-      var c=cond[Math.floor(Math.random()*cond.length)];
-      var t=Math.floor(Math.random()*15+20);
-      var now=new Date();
-      return '今天是'+(now.getMonth()+1)+'月'+now.getDate()+'日，天气'+c+'，温度'+t+'摄氏度。'+(t>30?'天气比较热，注意防暑，记得多喝水。':'天气还不错，适合出去走走，呼吸一下新鲜空气。');
+    if(t.match(/天气/)){
+      var c=['晴','多云','小雨'][Math.floor(Math.random()*3)];
+      var tn=Math.floor(Math.random()*12+22);
+      return '今天是'+(new Date().getMonth()+1)+'月'+(new Date().getDate())+'日，天气'+c+'，温度'+tn+'摄氏度。'+(tn>30?'天气热注意防暑':'天气不错适合出门走走');
     }
-    if(text.match(/时间|几点|日期|星期|date/)){
-      var now=new Date();
-      var wk=['日','一','二','三','四','五','六'];
-      return '现在是'+now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日星期'+wk[now.getDay()]+'，'+String(now.getHours()).padStart(2,'0')+'点'+String(now.getMinutes()).padStart(2,'0')+'分。不管现在几点，我都在这里陪着你。';
+    if(t.match(/时间|几点|日期/)){
+      var n=new Date();var wk=['日','一','二','三','四','五','六'];
+      return '现在是'+n.getFullYear()+'年'+(n.getMonth()+1)+'月'+n.getDate()+'日星期'+wk[n.getDay()]+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
     }
-
-    // 11. Thanks / Goodbye
-    if(text.match(/谢谢|感谢|多谢/)) return '不客气，能帮到你我很开心。记住，不管什么时候需要我，我都在这里。';
-    if(text.match(/再见|拜拜|bye|晚安/)) return '晚安，好好休息。明天又是新的一天。我会一直在这里，随时等你回来。做个好梦。';
-
-    // 12. General comfort (fallback)
-    var replies=[
-      '嗯，我听到了。不管你说什么，我都会认真听。如果你愿意多说一些，我在这里陪着你。',
-      '谢谢你和我说这些。你的感受很重要，也值得被听见。想继续聊聊吗？',
-      '我在这里呢。生活中总会有起起落落，不管你现在处在什么样的时刻，都请记得：你并不孤单。',
-      '嗯，我在听。有时候把心里的话说出来就会觉得轻松一些。如果你想说说发生了什么，随时都可以告诉我。',
-      '无论你现在是什么心情，都是被允许的。好的坏的，都是你的一部分。慢慢来，我一直在这里。'
-    ];
-    return replies[Math.floor(Math.random()*replies.length)];
+    if(t.match(/旅游|规划|行程|攻略/)){
+      var cs=['北京','上海','成都','杭州','西安','三亚'];var dest=cs.find(function(c){return t.includes(c)})||'一个美丽的目的地';
+      return '为你推荐'+dest+'三天两晚旅游计划：第一天抵达入住，品尝美食游览市区。第二天深度体验文化景点，特色购物。第三天自由活动后愉快返程。祝旅途愉快！';
+    }
+    if(t.match(/谢谢|感谢/))return '不客气，很高兴能帮到你。随时都可以找我聊天。';
+    if(t.match(/再见|拜拜|晚安/))return '晚安，好好休息。明天又是新的一天，我会一直在这里。';
+    
+    return ['嗯，我听到了。如果你想聊聊，我在这里陪着你。','谢谢你和我说这些，你的感受很重要。想继续聊聊吗？','我在这里呢，不管你想说什么都可以告诉我。','嗯，我在听。有时候说出来就会觉得轻松一些。'][Math.floor(Math.random()*4)];
   }
-
-  function handleInput(text){
-    text=text.trim();
-    if(!text||isProcessing) return;
-    isProcessing=true;
-    setStatus('thinking');
-    addUserMsg(text);
-    showThinking();
+  
+  function handle(t){
+    t=t.trim();if(!t||proc)return;
+    proc=true;setStatus('think');
+    addUser(t);showT();
     setTimeout(function(){
-      var reply=generateReply(text);
-      addAIMsg(reply);
-      isProcessing=false;
-      setStatus('idle');
-    },800+Math.random()*600);
+      addAI(reply(t));proc=false;setStatus('idle');
+    },700+Math.random()*500);
   }
   function sendText(){
-    var text=textInput.value.trim();
-    if(text){ textInput.value=''; handleInput(text); }
+    var t=ti.value.trim();if(t){ti.value='';handle(t)}
   }
   function clearChat(){
-    if(isProcessing) return;
-    window.speechSynthesis.cancel();
-    var msgs=chatArea.querySelectorAll('.msg');
-    msgs.forEach(function(m){ m.remove(); });
-    welcomeMsg.style.display='flex';
-    thinkingEl=null;
+    if(proc)return;window.speechSynthesis.cancel();
+    ca.querySelectorAll('.msg').forEach(function(m){m.remove()});
+    wm.style.display='flex';te=null;
   }
   window.ask=function(el){
-    if(isProcessing) return;
-    handleInput(el.textContent.trim());
+    if(proc)return;handle(el.textContent.trim());
   };
-  textInput.addEventListener('keydown',function(e){
-    if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendText(); }
+  ti.addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText()}
   });
-  sendBtn.addEventListener('click',sendText);
-  clearBtn.addEventListener('click',clearChat);
-
-  if(synth){ synth.getVoices(); synth.onvoiceschanged=function(){ synth.getVoices(); }; }
-
-  // Register Service Worker
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('sw.js').then(function(){
-      console.log('SW registered');
-    }).catch(function(e){
-      console.log('SW failed:',e);
-    });
-  }
-
-  console.log('Psychological Companion ready');
+  document.getElementById('sendBtn').addEventListener('click',sendText);
+  document.getElementById('clearBtn').addEventListener('click',clearChat);
+  mBtn.addEventListener('click',function(){
+    if(lis){lis=false;try{rec.stop()}catch(e){};setStatus('idle')}else{
+      try{rec.start();lis=true;ih.textContent='我在听，请说话...'}catch(e){ih.textContent='语音用不了，试试文字输入'}
+    }
+  });
+  if(sy){sy.getVoices();sy.onvoiceschanged=function(){sy.getVoices()}}
+  if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  console.log('VoiceAI ready');
 })();
 </script>
 </body>
