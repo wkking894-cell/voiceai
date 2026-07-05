@@ -138,15 +138,25 @@ html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',san
     });
   }
 
-  // Speech Recognition
+  // Speech Recognition (Android-compatible)
   var recognition=null;
   var isListening=false;
+  var micReady=false;
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  
+  function requestMic(){
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) return;
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
+      micReady=true;
+      s.getTracks().forEach(function(t){t.stop();});
+    }).catch(function(){});
+  }
+  
   if(SR&&location.protocol!=='file:'){
     try{
       recognition=new SR();
       recognition.lang='zh-CN';
-      recognition.continuous=false;
+      recognition.continuous=true;
       recognition.interimResults=true;
       recognition.onresult=function(e){
         var t='';
@@ -155,31 +165,38 @@ html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',san
         }
         if(t){ textInput.value=t; sendText(); }
       };
+      recognition.onaudiostart=function(){
+        inputHint.textContent='我在听，你说吧...';
+      };
       recognition.onerror=function(e){
         if(e.error==='no-speech'||e.error==='aborted') return;
-        setStatus('idle');
+        isListening=false;
         micBtn.className='mic-btn';
         inputHint.textContent='语音错误，试试文字输入';
-        isListening=false;
       };
       recognition.onend=function(){
-        isListening=false;
-        micBtn.className='mic-btn';
-        if(!isProcessing) setStatus('idle');
+        if(isListening){
+          try{ setTimeout(function(){recognition.start();},200); }catch(e){}
+        }else{
+          micBtn.className='mic-btn';
+          if(!isProcessing) setStatus('idle');
+        }
       };
       micBtn.addEventListener('click',function(){
         if(isListening){
-          recognition.stop(); isListening=false;
+          isListening=false; recognition.stop();
           micBtn.className='mic-btn'; setStatus('idle');
         }else{
+          if(!micReady) requestMic();
           try{
             recognition.start(); isListening=true;
             micBtn.classList.add('listening');
-            inputHint.textContent='我在听，你说吧...';
+            inputHint.textContent='正在启动语音...';
           }catch(e){ inputHint.textContent='语音暂时用不了'; }
         }
       });
       micBtn.title='点击说话';
+      micBtn.style.opacity='1';
     }catch(e){ micBtn.title='语音不可用'; micBtn.style.opacity='0.3'; }
   }else{
     micBtn.title='语音需要网络服务';
