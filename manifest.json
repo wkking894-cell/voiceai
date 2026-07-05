@@ -1,0 +1,20 @@
+ {
+   "name": "语音AI - 心理陪伴助手",
+   "short_name": "心理陪伴",
+   "description": "你的智能心理陪伴助手，随时倾听、安慰和鼓励你",
+   "start_url": "app.html",
+   "display": "standalone",
+   "orientation": "portrait",
+   "background_color": "#0a0e1a",
+   "theme_color": "#38bdf8",
+   "icons": [
+     {
+       "src": "icon.svg",
+       "sizes": "any",
+       "type": "image/svg+xml",
+       "purpose": "any maskable"
+     }
+   ],
+   "categories": ["lifestyle", "health"],
+   "lang": "zh-CN"
+ }
