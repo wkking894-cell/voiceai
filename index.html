@@ -138,19 +138,10 @@ html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',san
     });
   }
 
-  // Speech Recognition (Android-compatible)
+  // Speech Recognition (Android-optimized)
   var recognition=null;
   var isListening=false;
-  var micReady=false;
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  
-  function requestMic(){
-    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) return;
-    navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){
-      micReady=true;
-      s.getTracks().forEach(function(t){t.stop();});
-    }).catch(function(){});
-  }
   
   if(SR&&location.protocol!=='file:'){
     try{
@@ -172,27 +163,51 @@ html,body{height:100%;font-family:'Segoe UI','PingFang SC','Microsoft YaHei',san
         if(e.error==='no-speech'||e.error==='aborted') return;
         isListening=false;
         micBtn.className='mic-btn';
-        inputHint.textContent='语音错误，试试文字输入';
+        localStorage.removeItem('vai_mic');
+        if(e.error==='not-allowed'){
+          inputHint.textContent='请在手机设置中允许麦克风权限';
+          micBtn.style.opacity='0.4';
+        }else{
+          inputHint.textContent='语音错误，试试文字输入';
+        }
       };
       recognition.onend=function(){
+        localStorage.removeItem('vai_mic');
         if(isListening){
-          try{ setTimeout(function(){recognition.start();},200); }catch(e){}
+          try{ setTimeout(function(){recognition.start();},300); }catch(e){}
         }else{
           micBtn.className='mic-btn';
           if(!isProcessing) setStatus('idle');
         }
       };
+      
+      // Handle PWA restart after mic permission dialog (Android bug fix)
+      if(localStorage.getItem('vai_mic')==='1'){
+        localStorage.removeItem('vai_mic');
+        setTimeout(function(){
+          try{
+            recognition.start(); isListening=true;
+            micBtn.classList.add('listening');
+            inputHint.textContent='语音已恢复，请说话...';
+          }catch(e){}
+        },500);
+      }
+      
       micBtn.addEventListener('click',function(){
         if(isListening){
           isListening=false; recognition.stop();
           micBtn.className='mic-btn'; setStatus('idle');
+          localStorage.removeItem('vai_mic');
         }else{
-          if(!micReady) requestMic();
+          localStorage.setItem('vai_mic','1');
           try{
             recognition.start(); isListening=true;
             micBtn.classList.add('listening');
             inputHint.textContent='正在启动语音...';
-          }catch(e){ inputHint.textContent='语音暂时用不了'; }
+          }catch(e){
+            localStorage.removeItem('vai_mic');
+            inputHint.textContent='语音暂时用不了，试试文字输入';
+          }
         }
       });
       micBtn.title='点击说话';
