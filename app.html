@@ -93,7 +93,7 @@ html,body{height:100%;font-family:-apple-system,'PingFang SC','Microsoft YaHei',
   </div>
   <div class="hint" id="inputHint">输入你想说的话，按 Enter 发送</div>
   <div class="input-area">
-    <button class="mic-btn" id="micBtn" title="语音功能需要HTTPS">&#x1F3A4;</button>
+    <button class="mic-btn" id="micBtn" title="点击说话">&#x1F3A4;</button>
     <div class="input-box">
       <input type="text" class="text-input" id="textInput" placeholder="输入你的问题..." autocomplete="off">
       <button class="send-btn" id="sendBtn" onclick="sendText()">&#x27A4;</button>
@@ -130,7 +130,12 @@ html,body{height:100%;font-family:-apple-system,'PingFang SC','Microsoft YaHei',
   }
   if(sy){sy.getVoices();sy.onvoiceschanged=function(){sy.getVoices()}}
   if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
-  console.log('VoiceAI ready');
+    mBtn.addEventListener('click',function(){
+    if(isListening){isListening=false;try{recognition.stop()}catch(e){};setStatus('idle')}else{
+      try{recognition.start();isListening=true;ih.textContent='我在听，请说话...'}catch(e){ih.textContent='语音用不了，试试文字输入'}
+    }
+  });
+console.log('VoiceAI ready');
 })();
 </script>
 </body>
