@@ -1,5 +1,5 @@
  var CACHE = 'voiceai-v1';
- var FILES = ['app.html', 'manifest.json', 'icon.svg'];
+ var FILES = ['index.html', 'manifest.json', 'icon.svg'];
  
  self.addEventListener('install', function(e) {
    e.waitUntil(
